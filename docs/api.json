@@ -1,0 +1,492 @@
+{
+  "contractDigest": "a6cdf1be65f4bcb63fd16c07820052f53ccff30819262ec5393061ac44e03956",
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/products/vpn/accounts",
+      "source": "app/Http/Controllers/Api/V1/Vpn/VpnAccountController.php:157",
+      "required_fields": [],
+      "response_id_path": "data.id",
+      "body": {
+        "type": "object",
+        "properties": {
+          "dns_option": {
+            "type": "string",
+            "enum": [
+              "standard",
+              "no_ads",
+              "no_ads_no_scam"
+            ],
+            "description": "DNS option",
+            "default": "standard",
+            "x-validation": [
+              "sometimes",
+              "in:standard,no_ads,no_ads_no_scam"
+            ],
+            "x-validation-expressions": []
+          }
+        },
+        "additionalProperties": true,
+        "required": []
+      },
+      "bodyRequired": false,
+      "pathParameters": [],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "permissions": [
+        "vpn:create"
+      ],
+      "responseMode": "json"
+    },
+    {
+      "id": "GET /products/vpn/accounts/{account}",
+      "group": "vpn",
+      "name": "accountsShow",
+      "method": "GET",
+      "path": "/products/vpn/accounts/{account}",
+      "summary": "Show VPN account details",
+      "description": "Returns detailed information about a specific VPN account.",
+      "germanSummary": "VPN-Account Details anzeigen",
+      "permissions": [
+        "vpn:read"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "account",
+          "type": "string",
+          "description": "Account ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Account details",
+          "germanDescription": "Account-Details",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": {
+              "id": "550e8400-e29b-41d4-a716-446655440000",
+              "username": "vpn_abc12345",
+              "password": "xyz789secret",
+              "dns_option": "standard",
+              "dns_option_label": "Standard",
+              "status": "active",
+              "status_label": "Aktiv",
+              "max_sessions": 10,
+              "active_sessions": [
+                {
+                  "id": "550e8400-e29b-41d4-a716-446655440002",
+                  "device_info": "iPhone 14",
+                  "ip_address": "1.2.3.4",
+                  "location": "Frankfurt, DE",
+                  "login_at": "2025-01-15T10:30:00+00:00"
+                }
+              ],
+              "provider_account_id": 12345,
+              "expires_at": null,
+              "created_at": "2025-01-15T10:30:00+00:00"
+            }
+          },
+          "contentType": "application/json"
+        },
+        {
+          "status": 404,
+          "description": "Account not found",
+          "germanDescription": "Account nicht gefunden",
+          "schema": null,
+          "example": null,
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Vpn/VpnAccountController.php:109",
+      "routeName": "api.vpn.accounts.show"
+    },
+    {
+      "method": "POST",
+      "path": "/products/vpn/accounts/{account}/terminate",
+      "source": "app/Http/Controllers/Api/V1/Vpn/VpnAccountController.php:322",
+      "semantics": "terminate account",
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "pathParameters": [
+        {
+          "name": "account",
+          "type": "string",
+          "description": "Account ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "permissions": [
+        "vpn:delete"
+      ],
+      "responseMode": "json"
+    },
+    {
+      "method": "POST",
+      "path": "/products/vpn/accounts/{account}/suspend",
+      "source": "app/Http/Controllers/Api/V1/Vpn/VpnAccountController.php:256",
+      "body": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "description": "Suspension reason",
+            "maxLength": 255,
+            "x-validation": [
+              "sometimes",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          }
+        },
+        "additionalProperties": true,
+        "required": []
+      },
+      "bodyRequired": false,
+      "pathParameters": [
+        {
+          "name": "account",
+          "type": "string",
+          "description": "Account ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "permissions": [
+        "vpn:update"
+      ],
+      "responseMode": "json"
+    },
+    {
+      "method": "POST",
+      "path": "/products/vpn/accounts/{account}/unsuspend",
+      "source": "app/Http/Controllers/Api/V1/Vpn/VpnAccountController.php:291",
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "pathParameters": [
+        {
+          "name": "account",
+          "type": "string",
+          "description": "Account ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "permissions": [
+        "vpn:update"
+      ],
+      "responseMode": "json"
+    },
+    {
+      "id": "PATCH /products/vpn/accounts/{account}",
+      "group": "vpn",
+      "name": "accountsUpdate",
+      "method": "PATCH",
+      "path": "/products/vpn/accounts/{account}",
+      "summary": "Update VPN account",
+      "description": "Updates VPN account settings (DNS option only). Plan changes are not supported.",
+      "germanSummary": "VPN-Account aktualisieren",
+      "permissions": [
+        "vpn:update"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "account",
+          "type": "string",
+          "description": "Account ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {
+          "dns_option": {
+            "type": "string",
+            "enum": [
+              "standard",
+              "no_ads",
+              "no_ads_no_scam"
+            ],
+            "description": "DNS option",
+            "x-validation": [
+              "required",
+              "in:standard,no_ads,no_ads_no_scam"
+            ],
+            "x-validation-expressions": []
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "dns_option"
+        ]
+      },
+      "bodyRequired": true,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Account updated",
+          "germanDescription": "Account aktualisiert",
+          "schema": null,
+          "example": null,
+          "contentType": "application/json"
+        },
+        {
+          "status": 404,
+          "description": "Account not found",
+          "germanDescription": "Account nicht gefunden",
+          "schema": null,
+          "example": null,
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Vpn/VpnAccountController.php:213",
+      "routeName": "api.vpn.accounts.update",
+      "label": "DNS-Einstellungen"
+    },
+    {
+      "id": "GET /account",
+      "group": "account",
+      "name": "get",
+      "method": "GET",
+      "path": "/account",
+      "summary": "Get account details",
+      "description": "Returns the authenticated reseller account details including company information, contact details, tax information, enabled products, and credit balance.",
+      "germanSummary": "Kontoinformationen abrufen",
+      "permissions": [
+        "account:read"
+      ],
+      "authenticated": true,
+      "pathParameters": [],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Account details",
+          "germanDescription": "Kontoinformationen",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": {
+              "id": "9e1a2b3c-4d5e-6f7a-8b9c-0d1e2f3a4b5c",
+              "company_name": "Example GmbH",
+              "contact_name": "Max Mustermann",
+              "email": "max@example.com",
+              "phone": "+49 123 456789",
+              "address": "Musterstraße 1",
+              "city": "Berlin",
+              "zip": "10115",
+              "country": "DE",
+              "tax_id": "DE123456789",
+              "tax_type": "eu_vat",
+              "status": "active",
+              "enabled_products": [
+                "rootserver",
+                "domains",
+                "kubernetes"
+              ],
+              "is_main_reseller": true,
+              "credit_limit": "500.00",
+              "credit_used": "123.45",
+              "credit_available": "376.55",
+              "created_at": "2025-01-15T10:30:00.000000Z"
+            }
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Account/AccountController.php:53",
+      "routeName": "api.account.show"
+    },
+    {
+      "id": "PATCH /account",
+      "group": "account",
+      "name": "update",
+      "method": "PATCH",
+      "path": "/account",
+      "summary": "Update account details",
+      "description": "Updates non-critical account fields such as company name, contact name, phone, and address. Email, tax ID, and status cannot be changed via API.",
+      "germanSummary": "Kontoinformationen aktualisieren",
+      "permissions": [
+        "account:update"
+      ],
+      "authenticated": true,
+      "pathParameters": [],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {
+          "company_name": {
+            "type": "string",
+            "description": "Company name",
+            "example": "Example GmbH",
+            "maxLength": 255,
+            "x-validation": [
+              "sometimes",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          },
+          "contact_name": {
+            "type": "string",
+            "description": "Contact person name",
+            "example": "Max Mustermann",
+            "maxLength": 255,
+            "x-validation": [
+              "sometimes",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number",
+            "example": "+49 123 456789",
+            "maxLength": 50,
+            "nullable": true,
+            "x-validation": [
+              "sometimes",
+              "nullable",
+              "string",
+              "max:50"
+            ],
+            "x-validation-expressions": []
+          },
+          "address": {
+            "type": "string",
+            "description": "Street address",
+            "example": "Musterstraße 1",
+            "maxLength": 255,
+            "x-validation": [
+              "sometimes",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          },
+          "city": {
+            "type": "string",
+            "description": "City",
+            "example": "Berlin",
+            "maxLength": 255,
+            "x-validation": [
+              "sometimes",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          },
+          "zip": {
+            "type": "string",
+            "description": "ZIP code",
+            "example": "10115",
+            "maxLength": 20,
+            "x-validation": [
+              "sometimes",
+              "string",
+              "max:20"
+            ],
+            "x-validation-expressions": []
+          }
+        },
+        "additionalProperties": true,
+        "required": []
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Account updated successfully",
+          "germanDescription": "Konto erfolgreich aktualisiert",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": {
+              "id": "9e1a2b3c-4d5e-6f7a-8b9c-0d1e2f3a4b5c",
+              "company_name": "Updated GmbH",
+              "contact_name": "Max Mustermann"
+            }
+          },
+          "contentType": "application/json"
+        },
+        {
+          "status": 422,
+          "description": "Validation error",
+          "germanDescription": "Validierungsfehler",
+          "schema": null,
+          "example": null,
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Account/AccountController.php:92",
+      "routeName": "api.account.update"
+    }
+  ]
+}

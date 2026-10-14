@@ -1,0 +1,430 @@
+{
+  "vpn": {
+    "slug": "vpn",
+    "create": {
+      "method": "POST",
+      "path": "/products/vpn/accounts",
+      "source": "app/Http/Controllers/Api/V1/Vpn/VpnAccountController.php:157",
+      "required_fields": [],
+      "response_id_path": "data.id",
+      "body": {
+        "type": "object",
+        "properties": {
+          "dns_option": {
+            "type": "string",
+            "enum": [
+              "standard",
+              "no_ads",
+              "no_ads_no_scam"
+            ],
+            "description": "DNS option",
+            "default": "standard",
+            "x-validation": [
+              "sometimes",
+              "in:standard,no_ads,no_ads_no_scam"
+            ],
+            "x-validation-expressions": []
+          }
+        },
+        "additionalProperties": true,
+        "required": []
+      },
+      "bodyRequired": false,
+      "pathParameters": [],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "permissions": [
+        "vpn:create"
+      ],
+      "responseMode": "json"
+    },
+    "termination": {
+      "method": "POST",
+      "path": "/products/vpn/accounts/{account}/terminate",
+      "source": "app/Http/Controllers/Api/V1/Vpn/VpnAccountController.php:322",
+      "semantics": "terminate account",
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "pathParameters": [
+        {
+          "name": "account",
+          "type": "string",
+          "description": "Account ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "permissions": [
+        "vpn:delete"
+      ],
+      "responseMode": "json"
+    },
+    "suspend": {
+      "method": "POST",
+      "path": "/products/vpn/accounts/{account}/suspend",
+      "source": "app/Http/Controllers/Api/V1/Vpn/VpnAccountController.php:256",
+      "body": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "description": "Suspension reason",
+            "maxLength": 255,
+            "x-validation": [
+              "sometimes",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          }
+        },
+        "additionalProperties": true,
+        "required": []
+      },
+      "bodyRequired": false,
+      "pathParameters": [
+        {
+          "name": "account",
+          "type": "string",
+          "description": "Account ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "permissions": [
+        "vpn:update"
+      ],
+      "responseMode": "json"
+    },
+    "unsuspend": {
+      "method": "POST",
+      "path": "/products/vpn/accounts/{account}/unsuspend",
+      "source": "app/Http/Controllers/Api/V1/Vpn/VpnAccountController.php:291",
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "pathParameters": [
+        {
+          "name": "account",
+          "type": "string",
+          "description": "Account ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "permissions": [
+        "vpn:update"
+      ],
+      "responseMode": "json"
+    },
+    "notes": [
+      "Optional dns_option standard/no_ads/no_ads_no_scam",
+      "DELETE /products/vpn/accounts/{account} also deletes with deprovisioning",
+      "Optional suspend reason string max255"
+    ],
+    "displayName": "VPN",
+    "module": "yourresellingvpn",
+    "show": {
+      "id": "GET /products/vpn/accounts/{account}",
+      "group": "vpn",
+      "name": "accountsShow",
+      "method": "GET",
+      "path": "/products/vpn/accounts/{account}",
+      "summary": "Show VPN account details",
+      "description": "Returns detailed information about a specific VPN account.",
+      "germanSummary": "VPN-Account Details anzeigen",
+      "permissions": [
+        "vpn:read"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "account",
+          "type": "string",
+          "description": "Account ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Account details",
+          "germanDescription": "Account-Details",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": {
+              "id": "550e8400-e29b-41d4-a716-446655440000",
+              "username": "vpn_abc12345",
+              "password": "xyz789secret",
+              "dns_option": "standard",
+              "dns_option_label": "Standard",
+              "status": "active",
+              "status_label": "Aktiv",
+              "max_sessions": 10,
+              "active_sessions": [
+                {
+                  "id": "550e8400-e29b-41d4-a716-446655440002",
+                  "device_info": "iPhone 14",
+                  "ip_address": "1.2.3.4",
+                  "location": "Frankfurt, DE",
+                  "login_at": "2025-01-15T10:30:00+00:00"
+                }
+              ],
+              "provider_account_id": 12345,
+              "expires_at": null,
+              "created_at": "2025-01-15T10:30:00+00:00"
+            }
+          },
+          "contentType": "application/json"
+        },
+        {
+          "status": 404,
+          "description": "Account not found",
+          "germanDescription": "Account nicht gefunden",
+          "schema": null,
+          "example": null,
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Vpn/VpnAccountController.php:109",
+      "routeName": "api.vpn.accounts.show"
+    },
+    "showDataPath": "data",
+    "activeStatuses": [
+      "active"
+    ],
+    "views": {
+      "accountsShow": {
+        "id": "GET /products/vpn/accounts/{account}",
+        "group": "vpn",
+        "name": "accountsShow",
+        "method": "GET",
+        "path": "/products/vpn/accounts/{account}",
+        "summary": "Show VPN account details",
+        "description": "Returns detailed information about a specific VPN account.",
+        "germanSummary": "VPN-Account Details anzeigen",
+        "permissions": [
+          "vpn:read"
+        ],
+        "authenticated": true,
+        "pathParameters": [
+          {
+            "name": "account",
+            "type": "string",
+            "description": "Account ID"
+          }
+        ],
+        "query": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        },
+        "body": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        },
+        "bodyRequired": false,
+        "requestContentType": "application/json",
+        "responseMode": "json",
+        "responses": [
+          {
+            "status": 200,
+            "description": "Account details",
+            "germanDescription": "Account-Details",
+            "schema": null,
+            "example": {
+              "success": true,
+              "data": {
+                "id": "550e8400-e29b-41d4-a716-446655440000",
+                "username": "vpn_abc12345",
+                "password": "xyz789secret",
+                "dns_option": "standard",
+                "dns_option_label": "Standard",
+                "status": "active",
+                "status_label": "Aktiv",
+                "max_sessions": 10,
+                "active_sessions": [
+                  {
+                    "id": "550e8400-e29b-41d4-a716-446655440002",
+                    "device_info": "iPhone 14",
+                    "ip_address": "1.2.3.4",
+                    "location": "Frankfurt, DE",
+                    "login_at": "2025-01-15T10:30:00+00:00"
+                  }
+                ],
+                "provider_account_id": 12345,
+                "expires_at": null,
+                "created_at": "2025-01-15T10:30:00+00:00"
+              }
+            },
+            "contentType": "application/json"
+          },
+          {
+            "status": 404,
+            "description": "Account not found",
+            "germanDescription": "Account nicht gefunden",
+            "schema": null,
+            "example": null,
+            "contentType": "application/json"
+          }
+        ],
+        "deprecated": false,
+        "source": "app/Http/Controllers/Api/V1/Vpn/VpnAccountController.php:109",
+        "routeName": "api.vpn.accounts.show"
+      }
+    },
+    "controls": {
+      "accountsUpdate": {
+        "id": "PATCH /products/vpn/accounts/{account}",
+        "group": "vpn",
+        "name": "accountsUpdate",
+        "method": "PATCH",
+        "path": "/products/vpn/accounts/{account}",
+        "summary": "Update VPN account",
+        "description": "Updates VPN account settings (DNS option only). Plan changes are not supported.",
+        "germanSummary": "VPN-Account aktualisieren",
+        "permissions": [
+          "vpn:update"
+        ],
+        "authenticated": true,
+        "pathParameters": [
+          {
+            "name": "account",
+            "type": "string",
+            "description": "Account ID"
+          }
+        ],
+        "query": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "dns_option": {
+              "type": "string",
+              "enum": [
+                "standard",
+                "no_ads",
+                "no_ads_no_scam"
+              ],
+              "description": "DNS option",
+              "x-validation": [
+                "required",
+                "in:standard,no_ads,no_ads_no_scam"
+              ],
+              "x-validation-expressions": []
+            }
+          },
+          "additionalProperties": true,
+          "required": [
+            "dns_option"
+          ]
+        },
+        "bodyRequired": true,
+        "requestContentType": "application/json",
+        "responseMode": "json",
+        "responses": [
+          {
+            "status": 200,
+            "description": "Account updated",
+            "germanDescription": "Account aktualisiert",
+            "schema": null,
+            "example": null,
+            "contentType": "application/json"
+          },
+          {
+            "status": 404,
+            "description": "Account not found",
+            "germanDescription": "Account nicht gefunden",
+            "schema": null,
+            "example": null,
+            "contentType": "application/json"
+          }
+        ],
+        "deprecated": false,
+        "source": "app/Http/Controllers/Api/V1/Vpn/VpnAccountController.php:213",
+        "routeName": "api.vpn.accounts.update",
+        "label": "DNS-Einstellungen"
+      }
+    },
+    "customerFields": [],
+    "fields": [
+      {
+        "name": "dns_option",
+        "path": false,
+        "required": false,
+        "label": "dns_option",
+        "type": "string",
+        "enum": [
+          "standard",
+          "no_ads",
+          "no_ads_no_scam"
+        ],
+        "description": "DNS option",
+        "default": "standard",
+        "x-validation": [
+          "sometimes",
+          "in:standard,no_ads,no_ads_no_scam"
+        ],
+        "x-validation-expressions": []
+      }
+    ],
+    "configFields": [
+      {
+        "name": "dns_option",
+        "path": false,
+        "required": false,
+        "label": "dns_option",
+        "type": "string",
+        "enum": [
+          "standard",
+          "no_ads",
+          "no_ads_no_scam"
+        ],
+        "description": "DNS option",
+        "default": "standard",
+        "x-validation": [
+          "sometimes",
+          "in:standard,no_ads,no_ads_no_scam"
+        ],
+        "x-validation-expressions": []
+      }
+    ]
+  }
+}

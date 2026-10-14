@@ -1,0 +1,10 @@
+{
+  "repository": "whmcs-vpn",
+  "version": "3.0.0",
+  "product": "vpn",
+  "module": "yourresellingvpn",
+  "type": "servers",
+  "modulePath": "modules/servers/yourresellingvpn",
+  "namespace": "YourReselling\\Whmcs\\Vpn",
+  "contractDigest": "a6cdf1be65f4bcb63fd16c07820052f53ccff30819262ec5393061ac44e03956"
+}
